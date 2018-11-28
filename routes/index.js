@@ -1,17 +1,29 @@
 var express = require('express');
 var router = express.Router();
-var mysql = require('mysql')
+var connection = require('../database-connection');
 
-var connection = mysql.createConnection({
-  host     : 'localhost:5432',
-  user     : 'dbuser',
-  password : 's3kreee7',
-  database : 'my_db'
-});
+
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+
+	/*connection.end(function (err){
+		if (err) throw err;
+	});*/
+	console.log("OUTRSIDE");
+	connection.query('SELECT 1 + 1 AS solution', function (err, rows, fields) {
+	  	if (err) {
+	  		throw err
+	  	} 
+	  	console.log('The solution is: ', results[0].solution);
+	  	res.send("EHHEH");
+	  	console.log("HEJ");
+	  	res.json(rows);
+	});
+	
+	//res.send("dnb");
+  //res.render('index', { title: 'Express' });
 });
 
 router.get('/test', function(req, res, next) {
@@ -20,14 +32,3 @@ router.get('/test', function(req, res, next) {
 
 
 module.exports = router;
-
-
-connection.connect()
-
-connection.query('SELECT 1 + 1 AS solution', function (err, rows, fields) {
-  if (err) throw err
-
-  console.log('The solution is: ', rows[0].solution)
-})
-
-connection.end()
