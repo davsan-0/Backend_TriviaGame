@@ -12,10 +12,9 @@ const pgClient = new Sequelize(database, username, password, {
 
 const Triviagame = pgClient.define('Questions', {
     id: { type: Sequelize.STRING, primaryKey: true },
-    QuestionText: { type: Sequelize.STRING },
-    AnswersList: { type: Sequelize.STRING },
-    Category: { type: Sequelize.INTEGER },
-    created: {type: Sequelize.BIGINT }
+    questionText: { type: Sequelize.STRING },
+    answersList: { type: Sequelize.STRING },
+    category: { type: Sequelize.INTEGER }
 });
 
 Triviagame.sync().then(() => {
