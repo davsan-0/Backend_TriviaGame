@@ -1,0 +1,11 @@
+#TODO
+
+SERVER:
+- Sätt upp route för att skapa en Room-code. Denna Room-code ska sedan kopplas till ett port-nummer där servern börjar lyssna efter connection. Room code + port nr ska loggas in i databasen.
+- Sätt upp route för att joina på Room-code. Denna route ska acceptera en Room-code, den ska returnera det portnumret som är kopplat till koden.
+
+(State får hållas i varje enskild Unity-instans tillsvidare)
+UNITY:
+- Acceptera commandet #newplayer# från servern och se till att lägga till spelaren i spelet.
+- Acceptera commandet #answer# från servern och lägg till svaret i varje Unity-instans. Kanske skicka med spelarnamnet också så man kan inkrementera score? Eller ska det vara separat?
+- Acceptera commandet #questionid# från servern och sätt det svaret som CurrentQuestion.
