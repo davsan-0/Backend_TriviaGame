@@ -42,7 +42,13 @@ function startServer(port) {
 			switch(cmdStr) {
 				case "#name#":
 					socket.name = val;
-					broadcast("#newplayer#" + socket.name);
+					broadcast("#newplayer#" + socket.name, socket);
+					break;
+				case "#answer#":
+					broadcast("#answer#" + val, socket);
+					break;
+				case "#questionid#":
+					broadcast("#questionid#" + val, socket);
 					break;
 				default:
 					console.log("Unknown command: " + cmd);
@@ -61,11 +67,11 @@ function startServer(port) {
 	  function broadcast(message, sender) {
 	    clients.forEach(function (client) {
 	      // Don't want to send it to sender
-	      if (client === sender) return;
+	      //if (client === sender) return;
 	      client.write(message);
 	    });
 	    // Log it to the server output too
-	    process.stdout.write(message)
+	    process.stdout.write(message + "\n");
 	  }
 
 	}).listen(port);

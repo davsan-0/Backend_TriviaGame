@@ -13,7 +13,7 @@ const pgClient = new Sequelize(database, username, password, {
 const Triviagame = pgClient.define('Questions', {
   questionText: { type: Sequelize.STRING },
   answersList: { type: Sequelize.STRING },
-  category: { type: Sequelize.INTEGER }
+  category: { type: Sequelize.STRING }
 });
 
 const Sessions = pgClient.define('Sessions', {
