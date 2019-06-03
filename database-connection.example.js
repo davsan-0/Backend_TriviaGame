@@ -1,28 +1,35 @@
 const Sequelize = require('sequelize');
 
-const database = 'triviagame',
-  host = 'xxx',
-  username = 'xxx',
-  password = 'xxx';
+const database = '---',
+  host = '---',
+  username = '---',
+  password = '---';
 
 const pgClient = new Sequelize(database, username, password, {
   host: host,
   dialect: 'postgres'
 });
 
-const Triviagame = pgClient.define('Questions', {
+const Questions = pgClient.define('Questions', {
   questionText: { type: Sequelize.STRING },
   answersList: { type: Sequelize.TEXT },
   category: { type: Sequelize.STRING }
 });
 
 const Sessions = pgClient.define('Sessions', {
-  code: { type: Sequelize.STRING },
-  port: { type: Sequelize.STRING }
+  uuid: {
+    type: Sequelize.UUID,
+    defaultValue: Sequelize.UUIDV4,
+    primaryKey: true
+  },
+  code: { type: Sequelize.STRING(4) },
+  port: { type: Sequelize.INTEGER }
 });
 
-Triviagame.sync().then(() => {
+Questions.sync();
+
+Sessions.sync().then(() => {
   console.log("Postgres connection ready.");
 });
 
-module.exports = Triviagame;
+module.exports = { Questions, Sessions };

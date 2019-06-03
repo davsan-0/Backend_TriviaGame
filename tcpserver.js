@@ -1,6 +1,6 @@
 var net = require('net');
 
-startServer(8052);
+//startServer(8052);
 
 function startServer(port) {
 	// Keep track of the chat clients
@@ -21,34 +21,28 @@ function startServer(port) {
 
 	  // Send a nice welcome message and announce
 	  //socket.write("Welcome " + socket.name + "\n");
-	  broadcast(socket.name + " joined the chat\n", socket);
+	  //var obj = { cmd: "playerjoined", val: socket.name };
+	  //broadcast(JSON.stringify(obj));
 
 	  // Handle incoming messages from clients.
 	  socket.on('data', function (data) {
-	  	// Accepts anything written like #command# where "command" should be replaced with a command
-		var cmd_pattern = /^#[A-z]+#/;
-
 		var dataStr = data.toString();
+		var obj = JSON.parse(dataStr);
 
-		// Extracts the command
-		var cmd = dataStr.match(cmd_pattern);
-
+		var cmd = obj.cmd;
 		if (cmd) {
-			cmdStr = cmd[0];
+			var val = obj.val;
 
-			// Extract everything after the command
-			var val = dataStr.substr(cmdStr.length);
-
-			switch(cmdStr) {
-				case "#name#":
+			switch(cmd) {
+				case "name":
 					socket.name = val;
-					broadcast("#newplayer#" + socket.name, socket);
+					broadcast(dataStr, socket);
 					break;
-				case "#answer#":
-					broadcast("#answer#" + val, socket);
+				case "answer":
+					broadcast(dataStr, socket);
 					break;
-				case "#questionid#":
-					broadcast("#questionid#" + val, socket);
+				case "questionid":
+					broadcast(dataStr, socket);
 					break;
 				default:
 					console.log("Unknown command: " + cmd);
@@ -60,7 +54,8 @@ function startServer(port) {
 	  // Remove the client from the list when it leaves
 	  socket.on('end', function () {
 	    clients.splice(clients.indexOf(socket), 1);
-	    broadcast("#playerleft#" + socket.name);
+	    var obj = { cmd: "playerleft", val: socket.name };
+	  	broadcast(JSON.stringify(obj));
 	  });
 	  
 	  // Send a message to all clients
@@ -78,4 +73,4 @@ function startServer(port) {
 	console.log("Game server running at port " + port + "\n");
 }
 
-module.exports = startServer;
+module.exports.startServer = startServer;

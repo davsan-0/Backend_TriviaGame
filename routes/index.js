@@ -1,16 +1,20 @@
 var express = require('express');
 var router = express.Router();
 
-const TriviaGame = require('../database-connection.js');
+const Tables = require('../database-connection');
 const _ = require('lodash');
 const Question = require('../models/question');
+const Session = require('../models/session');
 const sequelize = require('sequelize');
 const uuid = require('uuid/v4');
+const TcpServer = require('../tcpserver')
 
+const PORT_START = 19000;
+const PORT_END = 19999;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	
+	res.send("Crab");
 });
 
 router.get('/initdb', function(req, res, next) {
@@ -41,6 +45,36 @@ router.get('/questions', function(req, res, next) {
 	});
 });
 
+router.get('/host', function(req, res, next) {
+	
+	Tables.Sessions.findAll({
+		limit: 1,
+		order: [ ['port', 'DESC'] ]
+	}).then(object => {
+		console.log("port = " + object[0].port);
+		//var newPort = (object[0].port >= PORT_END) ? PORT_START : object[0].port + 1;
+		var newPort = object[0].port + 1;
+		if (newPort > PORT_END)
+		{
+			next(new Error('PORT OUT OF RANGE'));
+		}
+		var code = generateCode();
+		let session = new Session(code, newPort);
+
+		Tables.Sessions.create(session).then(() => {
+			TcpServer.startServer(newPort);
+			res.send(JSON.stringify(session));
+		});
+	});
+	
+});
+
+router.get('/join', function(req, res, next) {
+	Tables.Sessions.findOne({ where: {code: req.query.code}, attributes: ['code', 'port'] }).then(object => {
+		res.send(JSON.stringify(object));
+	});
+});
+
 router.get('/insert', function(req, res, next) {
 	insertQuestionToDatabase (req.query.questionText, req.query.answerList, req.query.category, function (err, question) {
 		if (err)
@@ -55,13 +89,13 @@ router.get('/insert', function(req, res, next) {
 function insertQuestionToDatabase (questionText, answerList, category, callback)
 {
 	let question = new Question(uuid(), questionText, answerList, category);
-	TriviaGame.create(prepQuestion(question)).then(() => {
+	Tables.Questions.create(prepQuestion(question)).then(() => {
 		callback(null, question);
 	});
 }
 
 function getRandomQuestions (amount, callback) {
-	TriviaGame.findAll({
+	Tables.Questions.findAll({
 		limit: amount, 
 		order: [[sequelize.fn('RANDOM')]] 
 	}).then(questions => {
@@ -70,18 +104,20 @@ function getRandomQuestions (amount, callback) {
 }
 
 function prepQuestion (question) {
-	console.log("stringify  " + JSON.stringify(question.answerList));
 	return _.assign(question, { answerList: JSON.stringify(question.answerList) });
 }
 
 function debriefQuestion (question) {
-	console.log("yotta bolo " + question.answerList);
 	return _.assign(question, { answerList: JSON.parse(question.answerList) });
 }
 
 function debriefQuestions (questions) {
 	console.log(questions.map((question) => { console.log(question)}));
 	return questions.map((question) => { return debriefQuestion(question); });
+}
+
+function generateCode() {
+	return uuid().substring(0, 4).toUpperCase();
 }
 
 module.exports = router;
