@@ -1,7 +1,6 @@
 var net = require('net');
 
 //startServer(8052);
-
 function startServer(port) {
 	// Keep track of the chat clients
 	var clients = [];
@@ -13,11 +12,8 @@ function startServer(port) {
 
 	  // Inform client of all other players
 	  clients.forEach(function (client) {
-	  	socket.write("")
+	  	socket.write(JSON.stringify({ cmd: "name", val: client.name }));
 	  });
-
-	  // Put this new client in the list
-	  clients.push(socket);
 
 	  // Send a nice welcome message and announce
 	  //socket.write("Welcome " + socket.name + "\n");
@@ -41,7 +37,7 @@ function startServer(port) {
 				case "answer":
 					broadcast(dataStr, socket);
 					break;
-				case "questionid":
+				case "question":
 					broadcast(dataStr, socket);
 					break;
 				default:
@@ -57,12 +53,15 @@ function startServer(port) {
 	    var obj = { cmd: "playerleft", val: socket.name };
 	  	broadcast(JSON.stringify(obj));
 	  });
+
+	  // Put this new client in the list
+	  clients.push(socket);
 	  
 	  // Send a message to all clients
 	  function broadcast(message, sender) {
 	    clients.forEach(function (client) {
 	      // Don't want to send it to sender
-	      //if (client === sender) return;
+	      if (client === sender) return;
 	      client.write(message);
 	    });
 	    // Log it to the server output too

@@ -54,9 +54,13 @@ router.get('/host', function(req, res, next) {
 		console.log("port = " + object[0].port);
 		//var newPort = (object[0].port >= PORT_END) ? PORT_START : object[0].port + 1;
 		var newPort = object[0].port + 1;
-		if (newPort > PORT_END)
+		if (newPort > PORT_END )
 		{
 			next(new Error('PORT OUT OF RANGE'));
+			return;
+		} else if (newPort < PORT_START)
+		{
+			newPort = PORT_START;
 		}
 		var code = generateCode();
 		let session = new Session(code, newPort);
