@@ -33,6 +33,8 @@ router.get('/initdb', function(req, res, next) {
 		"Albania|Andorra|Armenia|Austria|Azerbaijan|Belarus|Belgium|Bosnia and Herzegovina;Bosnia|Bulgaria|Croatia|Cyprus|Czech Republic;Czech|Denmark|Estonia|Finland|France|Georgia|Germany|Greece|Hungary|Iceland|Ireland|Italy|Kazakhstan|Kosovo|Latvia|Liechtenstein|Lithuania|Luxembourg|Macedonia;FYROM|Malta|Moldova|Monaco|Montenegro|Netherlands;Holland|Norway|Poland|Portugal|Romania|Russia|San Marino|Serbia|Slovakia|Slovenia|Spain|Sweden|Switzerland|Turkey|Ukraine|United Kingdom;UK|Vatican City;Holy See",
 		"Science_and_Nature"
 	);
+
+	res.send("init");
 });
 
 router.get('/questions', function(req, res, next) {
@@ -92,23 +94,27 @@ router.get('/insert', function(req, res, next) {
 
 function insertQuestionToDatabase (questionText, answerList, category, callback)
 {
-	let question = new Question(uuid(), questionText, answerList, category);
+	let question = new Question(questionText, answerList, category);
 	Tables.Questions.create(prepQuestion(question)).then(() => {
-		callback(null, question);
+		if (callback) callback(null, question);
 	});
 }
 
 function getRandomQuestions (amount, callback) {
 	Tables.Questions.findAll({
+		attributes: ['id', 'questionText', 'category', 'answerList'],
 		limit: amount, 
 		order: [[sequelize.fn('RANDOM')]] 
 	}).then(questions => {
-		callback(null, questions);
+		if (callback) callback(null, questions);
 	});
 }
 
 function prepQuestion (question) {
-	return _.assign(question, { answerList: JSON.stringify(question.answerList) });
+	var json = JSON.stringify(question.answerList);
+	json = json.slice(1, json.length - 1); // Removes start and end quotes
+
+	return _.assign(question, { answerList: json });
 }
 
 function debriefQuestion (question) {

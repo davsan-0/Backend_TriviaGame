@@ -1,8 +1,7 @@
 'use strict';
 
-module.exports = function (id, questionText, answerList, category) {
-    this.id = id;
+module.exports = function (questionText, answerList, category) {
     this.questionText = questionText;
-    this.answersList = answerList;
+    this.answerList = answerList;
     this.category = category;
 }

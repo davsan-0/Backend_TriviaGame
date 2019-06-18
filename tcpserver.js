@@ -28,16 +28,24 @@ function startServer(port) {
 		var cmd = obj.cmd;
 		if (cmd) {
 			var val = obj.val;
-
+			console.log(dataStr);
 			switch(cmd) {
 				case "name":
 					socket.name = val;
-					broadcast(dataStr, socket);
+					clients.forEach(function (client) {
+						console.log("client - " + client.name);
+				      	client.write(dataStr);
+				    });
 					break;
 				case "answer":
 					broadcast(dataStr, socket);
 					break;
 				case "question":
+					console.log(socket.host + " is host");
+					console.log(dataStr);
+					broadcast(dataStr, socket);
+					break;
+				case "startgame":
 					broadcast(dataStr, socket);
 					break;
 				default:
@@ -53,6 +61,12 @@ function startServer(port) {
 	    var obj = { cmd: "playerleft", val: socket.name };
 	  	broadcast(JSON.stringify(obj));
 	  });
+
+	  // Set first client as host
+	  if (clients.length == 0)
+	  {
+	  	socket.host = true;
+	  }
 
 	  // Put this new client in the list
 	  clients.push(socket);
