@@ -8,6 +8,7 @@ const Session = require('../models/session');
 const sequelize = require('sequelize');
 const uuid = require('uuid/v4');
 const TcpServer = require('../tcpserver')
+const randomstring = require('randomstring');
 
 const PORT_START = 19000;
 const PORT_END = 19999;
@@ -127,7 +128,11 @@ function debriefQuestions (questions) {
 }
 
 function generateCode() {
-	return uuid().substring(0, 4).toUpperCase();
+	return randomstring.generate({
+		length: 4,
+		charset: 'alphabetic',
+		capitalization: 'uppercase'
+	});
 }
 
 module.exports = router;

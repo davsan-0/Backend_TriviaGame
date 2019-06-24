@@ -1,4 +1,6 @@
-var net = require('net');
+const net = require('net');
+const _ = require('lodash');
+const uuid = require('uuid/v4');
 
 //startServer(8052);
 function startServer(port) {
@@ -8,11 +10,11 @@ function startServer(port) {
 	net.createServer(function (socket) {
 
 	  // Identify this client
-	  //socket.name = socket.remoteAddress + ":" + socket.remotePort;
+	  socket.id = uuid();
 
 	  // Inform client of all other players
 	  clients.forEach(function (client) {
-	  	socket.write(JSON.stringify({ cmd: "name", val: client.name }));
+	  	socket.write(JSON.stringify({ cmd: "name", val: JSON.stringify({ id: client.id, name: client.name, isMe: false }) }));
 	  });
 
 	  // Send a nice welcome message and announce
@@ -28,17 +30,27 @@ function startServer(port) {
 		var cmd = obj.cmd;
 		if (cmd) {
 			var val = obj.val;
-			console.log(dataStr);
+			console.log("dataStr = " + dataStr);
 			switch(cmd) {
 				case "name":
 					socket.name = val;
+					console.log("socket id = "+ socket.id);
+					var newVal = { id: socket.id, name: val };
+
 					clients.forEach(function (client) {
+						
+						newVal.isMe = (client === socket);
+
+						_.assign(obj, { val: JSON.stringify(newVal) });
 						console.log("client - " + client.name);
-				      	client.write(dataStr);
+						console.log("obj = " + JSON.stringify(obj))
+				      	client.write(JSON.stringify(obj));
 				    });
 					break;
 				case "answer":
-					broadcast(dataStr, socket);
+					var newVal = { id: socket.id, answer: val };
+					_.assign(obj, { val: JSON.stringify(newVal) });
+					broadcast(JSON.stringify(obj), socket);
 					break;
 				case "question":
 					console.log(socket.host + " is host");
@@ -58,7 +70,7 @@ function startServer(port) {
 	  // Remove the client from the list when it leaves
 	  socket.on('end', function () {
 	    clients.splice(clients.indexOf(socket), 1);
-	    var obj = { cmd: "playerleft", val: socket.name };
+	    var obj = { cmd: "playerleft", val: socket.id };
 	  	broadcast(JSON.stringify(obj));
 	  });
 
@@ -84,6 +96,10 @@ function startServer(port) {
 
 	}).listen(port);
 	console.log("Game server running at port " + port + "\n");
+
+	process.on('uncaughtException',function(err){
+	   console.log(err)
+	});
 }
 
 module.exports.startServer = startServer;
