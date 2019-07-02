@@ -12,7 +12,7 @@ const pgClient = new Sequelize(database, username, password, {
 
 const Questions = pgClient.define('Questions', {
   questionText: { type: Sequelize.STRING },
-  answersList: { type: Sequelize.TEXT },
+  answerList: { type: Sequelize.TEXT },
   category: { type: Sequelize.STRING }
 });
 
