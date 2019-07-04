@@ -60,6 +60,9 @@ function startServer(port) {
 				case "startgame":
 					broadcast(dataStr, socket);
 					break;
+				case "revealall":
+					broadcast(dataStr, socket);
+					break;
 				default:
 					console.log("Unknown command: " + cmd);
 			}
