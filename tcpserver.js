@@ -63,6 +63,10 @@ function startServer(port) {
 				case "revealall":
 					broadcast(dataStr, socket);
 					break;
+				case "skip":
+					_assign(obj, { val: socket.id });
+					broadcast(JSON.stringify(obj), ""); // Sends to everyone, including sender
+					break;
 				default:
 					console.log("Unknown command: " + cmd);
 			}
