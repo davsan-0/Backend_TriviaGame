@@ -64,7 +64,7 @@ function startServer(port) {
 					broadcast(dataStr, socket);
 					break;
 				case "skip":
-					_assign(obj, { val: socket.id });
+					_.assign(obj, { val: socket.id });
 					broadcast(JSON.stringify(obj), ""); // Sends to everyone, including sender
 					break;
 				default:
