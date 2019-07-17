@@ -31,7 +31,7 @@ router.get('/initdb', function(req, res, next) {
 	);
 	insertQuestionToDatabase(
 		"Countries in Europe",
-		"Albania|Andorra|Armenia|Austria|Azerbaijan|Belarus|Belgium|Bosnia and Herzegovina;Bosnia|Bulgaria|Croatia|Cyprus|Czech Republic;Czech|Denmark|Estonia|Finland|France|Georgia|Germany|Greece|Hungary|Iceland|Ireland|Italy|Kazakhstan|Kosovo|Latvia|Liechtenstein|Lithuania|Luxembourg|Macedonia;FYROM|Malta|Moldova|Monaco|Montenegro|Netherlands;Holland|Norway|Poland|Portugal|Romania|Russia|San Marino|Serbia|Slovakia|Slovenia|Spain|Sweden|Switzerland|Turkey|Ukraine|United Kingdom;UK|Vatican City;Holy See",
+		"Albania|Andorra|Armenia|Austria|Azerbaijan|Belarus|Belgium|Bosnia and Herzegovina;Bosnia|Bulgaria|Croatia|Cyprus|Czech Republic;Czech|Denmark|Estonia|Finland|France|Georgia|Germany|Greece|Hungary|Iceland|Ireland|Italy|Kazakhstan|Kosovo|Latvia|Liechtenstein|Lithuania|Luxembourg|North Macedonia;Macedonia;FYROM|Malta|Moldova|Monaco|Montenegro|Netherlands;Holland|Norway|Poland|Portugal|Romania|Russia|San Marino|Serbia|Slovakia|Slovenia|Spain|Sweden|Switzerland|Turkey|Ukraine|United Kingdom;UK|Vatican City;Holy See",
 		"Geography"
 	);
 	insertQuestionToDatabase(
@@ -124,6 +124,37 @@ router.get('/initdb', function(req, res, next) {
 		"Bashful;Blyger|Doc;Kloker|Dopey;Toker|Grumpy;Butter|Happy;Glader|Sleepy;Trötter|Sneezy;Prosit",
 		"Entertainment"
 	);	
+	insertQuestionToDatabase(
+		"Smaker av Marabou Chokladkakor",
+		"Mjölkchoklad|Hallon|Crisp!;Crisp|KEX|Co-Co;Coco;Co Co|Schweizernöt|Mörk Choklad;Mörk|Japp|Daim|Frukt & Mandel;Frukt|Apelsinkrokant;Apelsin|Mintkrokant;Mint|Helnöt|Vit Choklad;Vit|Oreo|Black Saltlakrits;Saltlakrits;Black;lakrits|Salta Mandlar;Mandel;Mandlar|Salty Crackers TUC;TUC;Crackers;Salty Crackers|Digestive|Drömkrisp|Dukat|Gräddnougat|Oreo Filled|Japp Peanut Caramel;Japp Peanut|Sweet Biscuits LU;Sweet Biscuits|Fudge & Havssalt;Fudge|Toffee Whole Nut;Toffee",
+		""
+	);
+	insertQuestionToDatabase(
+		"Summer Olympics Sports",
+		"Archery|Artistic Swimming;Artistic|Athletics|Badminton|Basketball|Beach Volleyball|Boxing|Canoe Slalom|Canoe Sprint|Cycling BMX;BMX|Cycling Mountain Bike;Mountain Bike|Cycling Road|Cycling Track|Diving|Equestrian/Dressage;Equestrian Dressage;Dressage|Equestrian Eventing;Eventing|Equestrian Jumping|Fencing|Football|Golf|Gymnastics Artistic;Artistic|Gymnastics Rhythmic;Rhythmic|Handball|Hockey|Judo|Marathon Swimming|Modern Pentathlon;Pentathlon|Rowing|Rugby|Sailing|Shooting|Swimming|Table Tennis;Ping Pong|Taekwondo|Tennis|Trampoline|Triathlon|Volleyball|Water Polo|Weightlifting|Wrestling Freestyle;Freestyle|Wrestling Greco-Roman;Greco-Roman;Greco Roman"
+		"Sports"
+	);
+	insertQuestionToDatabase(
+		"Winter Olympics Sports",
+		"Alpine Skiing;Alpine|Biathlon|Bobsleigh;Bob|Cross Country Skiing;Cross-Country|Curling|Figure Skating|Freestyle Skiing|Ice Hockey;Hockey|Luge|Nordic Combined|Short Track|Skeleton|Ski Jumping|Snowboard|Speed Skating",
+		"Sports"
+	);
+	insertQuestionToDatabase(
+		"Zodiac Signs",
+		"Aries;Väduren|Taurus;Oxen|Gemini;Tvillingarna|Cancer;Kräftan|Leo;Lejonet|Virgo;Jungfrun|Libra;Vågen|Scorpio;Skorpionen|Sagittarius;Skytten|Capricorn;Stenbocken|Aquarius;Vattumannen|Pisces;Fiskarna",
+		""
+	);
+	insertQuestionToDatabase(
+		"Quentin Tarantino Movies",
+		"Pulp Fiction|Django Unchained;Django|Inglourious Basterds;Inglorious;Bastards;Basterds;Inglourious|The Hateful Eight;Hateful|Reservoir Dogs;Dogs|Kill Bill: Volume 1;Kill Bill 1|Kill Bill: Volume 2;Kill Bill 2|Kill Bill: Vol. 3;Kill Bill 3;Kill Bill: Volume 3|Death Proof|Jackie Brown|Four Rooms|Sin City|Grindhouse|My Best Friend's Birthday|Love Birds in Bondage",
+		"Entertainment"
+	);
+	insertQuestionToDatabase(
+		"Members of the Fellowship of the Ring",
+		"Gandalf|Frodo|Sam|Aragorn|Legolas|Gimli|Pippin|Merry|Boromir",
+		"Entertainment"
+	);
+
 	
 
 
