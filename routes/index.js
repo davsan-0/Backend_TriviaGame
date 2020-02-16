@@ -131,7 +131,7 @@ router.get('/initdb', function(req, res, next) {
 	);
 	insertQuestionToDatabase(
 		"Summer Olympics Sports",
-		"Archery|Artistic Swimming;Artistic|Athletics|Badminton|Basketball|Beach Volleyball|Boxing|Canoe Slalom|Canoe Sprint|Cycling BMX;BMX|Cycling Mountain Bike;Mountain Bike|Cycling Road|Cycling Track|Diving|Equestrian/Dressage;Equestrian Dressage;Dressage|Equestrian Eventing;Eventing|Equestrian Jumping|Fencing|Football|Golf|Gymnastics Artistic;Artistic|Gymnastics Rhythmic;Rhythmic|Handball|Hockey|Judo|Marathon Swimming|Modern Pentathlon;Pentathlon|Rowing|Rugby|Sailing|Shooting|Swimming|Table Tennis;Ping Pong|Taekwondo|Tennis|Trampoline|Triathlon|Volleyball|Water Polo|Weightlifting|Wrestling Freestyle;Freestyle|Wrestling Greco-Roman;Greco-Roman;Greco Roman"
+		"Archery|Artistic Swimming;Artistic|Athletics|Badminton|Basketball|Beach Volleyball|Boxing|Canoe Slalom|Canoe Sprint|Cycling BMX;BMX|Cycling Mountain Bike;Mountain Bike|Cycling Road|Cycling Track|Diving|Equestrian/Dressage;Equestrian Dressage;Dressage|Equestrian Eventing;Eventing|Equestrian Jumping|Fencing|Football|Golf|Gymnastics Artistic;Artistic|Gymnastics Rhythmic;Rhythmic|Handball|Hockey|Judo|Marathon Swimming|Modern Pentathlon;Pentathlon|Rowing|Rugby|Sailing|Shooting|Swimming|Table Tennis;Ping Pong|Taekwondo|Tennis|Trampoline|Triathlon|Volleyball|Water Polo|Weightlifting|Wrestling Freestyle;Freestyle|Wrestling Greco-Roman;Greco-Roman;Greco Roman",
 		"Sports"
 	);
 	insertQuestionToDatabase(
@@ -154,15 +154,6 @@ router.get('/initdb', function(req, res, next) {
 		"Gandalf|Frodo|Sam|Aragorn|Legolas|Gimli|Pippin|Merry|Boromir",
 		"Entertainment"
 	);
-
-	
-
-
-
-
-	
-
-
 	res.send("init");
 });
 
